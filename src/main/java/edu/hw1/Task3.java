@@ -28,12 +28,4 @@ public class Task3 {
         }
         return firstArray.length != ZERO_LENGTH && secondArray.length != ZERO_LENGTH;
     }
-    private static int findMin(int[] array){
-        int min = Integer.MAX_VALUE;
-        for(var number : array){
-            min = Math.min(min, number);
-        }
-
-        return min;
-    }
 }

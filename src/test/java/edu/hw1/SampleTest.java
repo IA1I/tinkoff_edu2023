@@ -2,12 +2,14 @@ package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SampleTest {
 
@@ -105,6 +107,31 @@ public class SampleTest {
                 Arguments.of(null, (Object) new int[]{}, false),
                 Arguments.of(null, null, false)
             );
+        }
+    }
+
+    @Nested
+    @DisplayName("4. Сломанная строка")
+    class TestTask4 {
+        @ParameterizedTest
+        @DisplayName("Исправление строки")
+        @CsvSource({
+            "123456, 214365",
+            "hTsii  s aimex dpus rtni.g, This is a mixed up string.",
+            "badce, abcde",
+            "a, a",
+            "ba, ab"
+        })
+        void testRegularInput(final String input, final String expected) {
+            String actual = Task4.fixString(input);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("Неправильный формат ввода: null")
+        void testWrongInputFormat() {
+            assertThrows(IllegalArgumentException.class, () -> Task4.fixString(null));
         }
     }
 }
