@@ -56,6 +56,7 @@ public class SampleTest {
     @DisplayName("2. Количество цифр")
     class TestTask2{
         @ParameterizedTest
+        @DisplayName("Количество цифр в числе")
         @MethodSource("testCases")
         void testRegularInput(final int input, final int expected){
             int actual = Task2.countDigits(input);
@@ -78,4 +79,5 @@ public class SampleTest {
             );
         }
     }
+    
 }
