@@ -133,5 +133,15 @@ public class SampleTest {
         void testWrongInputFormat() {
             assertThrows(IllegalArgumentException.class, () -> Task4.fixString(null));
         }
+
+        @Test
+        @DisplayName("Пустая строка")
+        void testEmptyString() {
+            String input = "";
+            String expected = "";
+            String actual = Task4.fixString(input);
+
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 }
