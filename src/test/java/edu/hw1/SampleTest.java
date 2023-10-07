@@ -38,7 +38,8 @@ public class SampleTest {
             ", -1",
             " , -1",
             "ac:59, -1",
-            "2147483649:2, -1"
+            "2147483649:2, -1",
+            "10:2:2, -1"
         })
         void testWrongInputFormat(final String input, final int expected){
             int actual = Task1.minutesToSeconds(input);

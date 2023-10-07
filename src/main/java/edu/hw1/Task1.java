@@ -2,7 +2,7 @@ package edu.hw1;
 
 public class Task1 {
     public static final String COLON = ":";
-    public static final int ARRAY_SIZE = 2;
+    public static final int NUMBER_OF_SECTIONS = 2;
     public static final int WRONG_ANSWER = -1;
     public static final int SIXTY_SECONDS = 60;
     public static int minutesToSeconds(String videoLength){
@@ -21,8 +21,11 @@ public class Task1 {
 
     private static int[] inputProcessing(String videoLength) throws Exception {
         String[] input = videoLength.split(COLON);
-        int[] duration = new int[ARRAY_SIZE];
-        for(int i = 0; i < ARRAY_SIZE; i++){
+        int[] duration = new int[NUMBER_OF_SECTIONS];
+        if(input.length != NUMBER_OF_SECTIONS){
+            throw new Exception();
+        }
+        for(int i = 0; i < NUMBER_OF_SECTIONS; i++){
             duration[i] = Integer.parseInt(input[i]);
         }
         if(duration[1] >= SIXTY_SECONDS){
