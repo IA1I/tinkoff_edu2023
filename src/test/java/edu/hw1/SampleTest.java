@@ -79,5 +79,32 @@ public class SampleTest {
             );
         }
     }
-    
+
+    @Nested
+    @DisplayName("3. Вложенный массив")
+    class TestTask3{
+        @ParameterizedTest
+        @DisplayName("Вложенный массив")
+        @MethodSource("testCases")
+        void testRegularInput(final int[] firstInputArray, final int[] secondInputArray, final boolean expected){
+            boolean actual = Task3.isNestable(firstInputArray, secondInputArray);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> testCases(){
+            return Stream.of(
+                Arguments.of((Object) new int[]{1, 2, 3, 4}, (Object) new int[]{0, 6}, true),
+                Arguments.of((Object) new int[]{3, 1}, (Object) new int[]{4, 0}, true),
+                Arguments.of((Object) new int[]{9, 9, 8}, (Object) new int[]{8, 9}, false),
+                Arguments.of((Object) new int[]{1, 2, 3, 4}, (Object) new int[]{2, 3}, false),
+                Arguments.of((Object) new int[]{}, (Object) new int[]{2, 3}, false),
+                Arguments.of((Object) new int[]{1, 2}, (Object) new int[]{}, false),
+                Arguments.of((Object) new int[]{}, (Object) new int[]{}, false),
+                Arguments.of((Object) new int[]{}, null, false),
+                Arguments.of(null, (Object) new int[]{}, false),
+                Arguments.of(null, null, false)
+            );
+        }
+    }
 }
