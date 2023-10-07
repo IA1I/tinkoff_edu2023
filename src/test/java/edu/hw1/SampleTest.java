@@ -144,4 +144,29 @@ public class SampleTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("5. Особый палиндром")
+    class TestTask5{
+        @ParameterizedTest
+        @DisplayName("Особый палиндром")
+        @MethodSource("testCases")
+        void testRegularInput(final int input, final boolean expected){
+            boolean actual = Task5.isPalindromeDescendant(input);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+        static Stream<Arguments> testCases(){
+            return Stream.of(
+                Arguments.of(11211230, true),
+                Arguments.of(13001120, true),
+                Arguments.of(23336014, true),
+                Arguments.of(11, true),
+                Arguments.of(5, true),
+                Arguments.of(14, false),
+                Arguments.of(1234, false),
+                Arguments.of(12345, false)
+            );
+        }
+    }
 }
