@@ -16,6 +16,8 @@ public class SampleTest {
         @CsvSource({
             "01:00, 60",
             "00:00, 0",
+            "000:000, 0",
+            "001:002, 62",
             "13:56, 836",
             "999:59, 59999"
         })
@@ -35,7 +37,8 @@ public class SampleTest {
             "wrong, -1",
             ", -1",
             " , -1",
-            "ac:59, -1"
+            "ac:59, -1",
+            "2147483649:2, -1"
         })
         void testWrongInputFormat(final String input, final int expected){
             int actual = Task1.minutesToSeconds(input);
