@@ -169,4 +169,40 @@ public class SampleTest {
             );
         }
     }
+
+    @Nested
+    @DisplayName("6. Постоянная Капрекара")
+    class TestTask6{
+        @ParameterizedTest
+        @DisplayName("Постоянная Капрекара")
+        @MethodSource("testCases")
+        void testRegularInput(final int input, final int expected){
+            int actual = Task6.countK(input);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+        static Stream<Arguments> testCases(){
+            return Stream.of(
+                Arguments.of(3524, 3),
+                Arguments.of(6621, 5),
+                Arguments.of(6554, 4),
+                Arguments.of(1234, 3)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("Неправильный формат ввода")
+        @CsvSource({
+            "123",
+            "10000",
+            "1111",
+            "2222",
+            "-1234",
+            "1000"
+        })
+        void testWrongInputFormat(final int input) {
+            assertThrows(IllegalArgumentException.class, () -> Task6.countK(input));
+        }
+
+    }
 }
