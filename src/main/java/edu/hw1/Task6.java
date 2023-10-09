@@ -9,6 +9,11 @@ public class Task6 {
     public static final int BOTTOM_LIMIT = 1000;
     public static final int WRONG_NUMBER_OF_DIGITS = 1;
     public static final int KAPREKAR_CONST = 6174;
+    public static final int FIRST_DIGIT = 10;
+    public static final int SECOND_DIGIT = 10;
+    public static final int THIRD_DIGIT = 100;
+    public static final int FOURTH_DIGIT = 1000;
+    public static final int LAST_INDEX = 3;
 
     private Task6() {
     }
@@ -45,18 +50,22 @@ public class Task6 {
     }
 
     private static int getMaxNumber(int number) {
-        int[] arrayNumber = new int[] {number % 10, number / 10 % 10, number / 100 % 10, number / 1000};
+        int[] arrayNumber =
+            new int[] {number % FIRST_DIGIT, number / SECOND_DIGIT % FIRST_DIGIT, number / THIRD_DIGIT % FIRST_DIGIT,
+                number / FOURTH_DIGIT};
         Arrays.sort(arrayNumber);
-        int maxNumber = arrayNumber[3] * 1000 + arrayNumber[2] * 100 + arrayNumber[1] * 10 + arrayNumber[0];
 
-        return maxNumber;
+        return arrayNumber[LAST_INDEX] * FOURTH_DIGIT + arrayNumber[2] * THIRD_DIGIT + arrayNumber[1] * SECOND_DIGIT
+            + arrayNumber[0];
     }
 
     private static int getMinNumber(int number) {
-        int[] arrayNumber = new int[] {number % 10, number / 10 % 10, number / 100 % 10, number / 1000};
+        int[] arrayNumber =
+            new int[] {number % FIRST_DIGIT, number / SECOND_DIGIT % FIRST_DIGIT, number / THIRD_DIGIT % FIRST_DIGIT,
+                number / FOURTH_DIGIT};
         Arrays.sort(arrayNumber);
-        int minNumber = arrayNumber[0] * 1000 + arrayNumber[1] * 100 + arrayNumber[2] * 10 + arrayNumber[3];
 
-        return minNumber;
+        return arrayNumber[0] * FOURTH_DIGIT + arrayNumber[1] * THIRD_DIGIT
+            + arrayNumber[2] * SECOND_DIGIT + arrayNumber[LAST_INDEX];
     }
 }

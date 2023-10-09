@@ -4,6 +4,9 @@ public class Task7 {
     public static final int ZERO = 0;
     public static final int RADIX = 2;
 
+    private Task7() {
+    }
+
     public static int rotateLeft(int number, int shift) {
         checkInput(number, shift);
         char[] binaryNumber = convertToBinary(number);
