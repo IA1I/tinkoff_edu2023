@@ -189,7 +189,8 @@ public class SampleTest {
                 Arguments.of(3524, 3),
                 Arguments.of(6621, 5),
                 Arguments.of(6554, 4),
-                Arguments.of(1234, 3)
+                Arguments.of(1234, 3),
+                Arguments.of(2221, 5)
             );
         }
 
@@ -254,6 +255,98 @@ public class SampleTest {
             return Stream.of(
                 Arguments.of(8, 1, 4),
                 Arguments.of(8, 5, 4)
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("8. Кони на доске")
+    class TestTask8 {
+        @ParameterizedTest
+        @DisplayName("Кони на доске")
+        @MethodSource("testCases")
+        void testRegularInput(final byte[][] input, final boolean expected) {
+            boolean actual = Task8.knightBoardCapture(input);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> testCases() {
+            return Stream.of(
+                Arguments.of(new byte[][] {
+                    {0, 0, 0, 1, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 1, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 1, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 1, 0, 0, 0, 0, 0, 1},
+                    {0, 0, 0, 0, 1, 0, 0, 0}
+                }, true),
+                Arguments.of(new byte[][] {
+                    {1, 0, 1, 0, 1, 0, 1, 0},
+                    {0, 1, 0, 1, 0, 1, 0, 1},
+                    {0, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 0, 1, 0, 0, 1, 0, 1},
+                    {1, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 1},
+                    {1, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 0, 0, 1, 0, 1, 0, 1}
+                }, false),
+                Arguments.of(new byte[][] {
+                    {0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 1, 0, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0}
+                }, false)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("Неправильный формат ввода")
+        @MethodSource("wrongTestCases")
+        void testWrongInput(final byte[][] input) {
+            assertThrows(IllegalArgumentException.class, () -> Task8.knightBoardCapture(input));
+        }
+
+        static Stream<Arguments> wrongTestCases() {
+            return Stream.of(
+                Arguments.of((Object) null),
+                Arguments.of((Object) new byte[][] {
+                    null,
+                    {0, 1, 0, 1, 0, 1, 0, 1},
+                    {0, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 0, 1, 0, 0, 1, 0, 1},
+                    {1, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 1},
+                    {1, 0, 0, 0, 1, 0, 1, 0},
+                    {0, 0, 0, 1, 0, 1, 0, 1}
+                }),
+                Arguments.of((Object) new byte[][] {
+                    {0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 1, 0, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0}
+                }),
+                Arguments.of((Object) new byte[][] {
+                    {0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 1, 0, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {0, 0, 0, 0, 0, 1, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0}
+                })
             );
         }
     }
