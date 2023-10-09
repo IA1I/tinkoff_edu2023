@@ -8,7 +8,7 @@ public class Task4 {
         if (incorrectString == null) {
             throw new IllegalArgumentException();
         }
-        StringBuffer correctString = new StringBuffer(incorrectString);
+        StringBuilder correctString = new StringBuilder(incorrectString);
         for (int i = 0; i < correctString.length() - 1; i += 2) {
             char tmp = correctString.charAt(i);
             correctString.setCharAt(i, correctString.charAt(i + 1));
