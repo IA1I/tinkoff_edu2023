@@ -13,10 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SampleTest {
 
-
     @Nested
     @DisplayName("1. Длина видео")
-    class TestTask1{
+    class TestTask1 {
         @ParameterizedTest
         @DisplayName("Перевод из минут в секунды")
         @CsvSource({
@@ -27,11 +26,12 @@ public class SampleTest {
             "13:56, 836",
             "999:59, 59999"
         })
-        void testRegularInput(final String input, final int expected){
+        void testRegularInput(final String input, final int expected) {
             int actual = Task1.minutesToSeconds(input);
 
             assertThat(actual).isEqualTo(expected);
         }
+
         @ParameterizedTest
         @DisplayName("Неправильный формат ввода")
         @CsvSource({
@@ -47,7 +47,7 @@ public class SampleTest {
             "2147483649:2, -1",
             "10:2:2, -1"
         })
-        void testWrongInputFormat(final String input, final int expected){
+        void testWrongInputFormat(final String input, final int expected) {
             int actual = Task1.minutesToSeconds(input);
 
             assertThat(actual).isEqualTo(expected);
@@ -56,16 +56,17 @@ public class SampleTest {
 
     @Nested
     @DisplayName("2. Количество цифр")
-    class TestTask2{
+    class TestTask2 {
         @ParameterizedTest
         @DisplayName("Количество цифр в числе")
         @MethodSource("testCases")
-        void testRegularInput(final int input, final int expected){
+        void testRegularInput(final int input, final int expected) {
             int actual = Task2.countDigits(input);
 
             assertThat(actual).isEqualTo(expected);
         }
-        static Stream<Arguments> testCases(){
+
+        static Stream<Arguments> testCases() {
             return Stream.of(
                 Arguments.of(12345, 5),
                 Arguments.of(1234, 4),
@@ -84,27 +85,27 @@ public class SampleTest {
 
     @Nested
     @DisplayName("3. Вложенный массив")
-    class TestTask3{
+    class TestTask3 {
         @ParameterizedTest
         @DisplayName("Вложенный массив")
         @MethodSource("testCases")
-        void testRegularInput(final int[] firstInputArray, final int[] secondInputArray, final boolean expected){
+        void testRegularInput(final int[] firstInputArray, final int[] secondInputArray, final boolean expected) {
             boolean actual = Task3.isNestable(firstInputArray, secondInputArray);
 
             assertThat(actual).isEqualTo(expected);
         }
 
-        static Stream<Arguments> testCases(){
+        static Stream<Arguments> testCases() {
             return Stream.of(
-                Arguments.of((Object) new int[]{1, 2, 3, 4}, (Object) new int[]{0, 6}, true),
-                Arguments.of((Object) new int[]{3, 1}, (Object) new int[]{4, 0}, true),
-                Arguments.of((Object) new int[]{9, 9, 8}, (Object) new int[]{8, 9}, false),
-                Arguments.of((Object) new int[]{1, 2, 3, 4}, (Object) new int[]{2, 3}, false),
-                Arguments.of((Object) new int[]{}, (Object) new int[]{2, 3}, false),
-                Arguments.of((Object) new int[]{1, 2}, (Object) new int[]{}, false),
-                Arguments.of((Object) new int[]{}, (Object) new int[]{}, false),
-                Arguments.of((Object) new int[]{}, null, false),
-                Arguments.of(null, (Object) new int[]{}, false),
+                Arguments.of((Object) new int[] {1, 2, 3, 4}, (Object) new int[] {0, 6}, true),
+                Arguments.of((Object) new int[] {3, 1}, (Object) new int[] {4, 0}, true),
+                Arguments.of((Object) new int[] {9, 9, 8}, (Object) new int[] {8, 9}, false),
+                Arguments.of((Object) new int[] {1, 2, 3, 4}, (Object) new int[] {2, 3}, false),
+                Arguments.of((Object) new int[] {}, (Object) new int[] {2, 3}, false),
+                Arguments.of((Object) new int[] {1, 2}, (Object) new int[] {}, false),
+                Arguments.of((Object) new int[] {}, (Object) new int[] {}, false),
+                Arguments.of((Object) new int[] {}, null, false),
+                Arguments.of(null, (Object) new int[] {}, false),
                 Arguments.of(null, null, false)
             );
         }
@@ -147,16 +148,17 @@ public class SampleTest {
 
     @Nested
     @DisplayName("5. Особый палиндром")
-    class TestTask5{
+    class TestTask5 {
         @ParameterizedTest
         @DisplayName("Особый палиндром")
         @MethodSource("testCases")
-        void testRegularInput(final int input, final boolean expected){
+        void testRegularInput(final int input, final boolean expected) {
             boolean actual = Task5.isPalindromeDescendant(input);
 
             assertThat(actual).isEqualTo(expected);
         }
-        static Stream<Arguments> testCases(){
+
+        static Stream<Arguments> testCases() {
             return Stream.of(
                 Arguments.of(11211230, true),
                 Arguments.of(13001120, true),
@@ -172,16 +174,17 @@ public class SampleTest {
 
     @Nested
     @DisplayName("6. Постоянная Капрекара")
-    class TestTask6{
+    class TestTask6 {
         @ParameterizedTest
         @DisplayName("Постоянная Капрекара")
         @MethodSource("testCases")
-        void testRegularInput(final int input, final int expected){
+        void testRegularInput(final int input, final int expected) {
             int actual = Task6.countK(input);
 
             assertThat(actual).isEqualTo(expected);
         }
-        static Stream<Arguments> testCases(){
+
+        static Stream<Arguments> testCases() {
             return Stream.of(
                 Arguments.of(3524, 3),
                 Arguments.of(6621, 5),
@@ -204,5 +207,54 @@ public class SampleTest {
             assertThrows(IllegalArgumentException.class, () -> Task6.countK(input));
         }
 
+    }
+
+    @Nested
+    @DisplayName("7. Циклический битовый сдвиг")
+    class TaskTask7 {
+        @ParameterizedTest
+        @DisplayName("Сдвиг влево")
+        @MethodSource("testCasesForLeft")
+        void testRegularInputForLeft(final int inputNumber, final int inputShift, final int expected) {
+            int actual = Task7.rotateLeft(inputNumber, inputShift);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> testCasesForLeft() {
+            return Stream.of(
+                Arguments.of(16, 1, 1),
+                Arguments.of(16, 6, 1),
+                Arguments.of(17, 2, 6)
+            );
+        }
+
+        @ParameterizedTest
+        @DisplayName("Неправильный формат ввода для сдвига влево и вправо")
+        @CsvSource({
+            "-10, 1",
+            "10, -1",
+            "-100, -3",
+        })
+        void testWrongInputFormatForBothShift(final int inputNumber, final int inputShift) {
+            assertThrows(IllegalArgumentException.class, () -> Task7.rotateLeft(inputNumber, inputShift));
+            assertThrows(IllegalArgumentException.class, () -> Task7.rotateRight(inputNumber, inputShift));
+        }
+
+        @ParameterizedTest
+        @DisplayName("Сдвиг вправо")
+        @MethodSource("testCasesForRight")
+        void testRegularInputForRight(final int inputNumber, final int inputShift, final int expected) {
+            int actual = Task7.rotateRight(inputNumber, inputShift);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> testCasesForRight() {
+            return Stream.of(
+                Arguments.of(8, 1, 4),
+                Arguments.of(8, 5, 4)
+            );
+        }
     }
 }
