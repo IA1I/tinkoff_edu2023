@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class Task5 {
-    public static final int MIN_LENGTH_NUMBER = 2;
+    private static final int MIN_LENGTH_NUMBER = 2;
 
     private Task5() {
     }

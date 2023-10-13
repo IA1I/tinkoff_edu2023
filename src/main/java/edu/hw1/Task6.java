@@ -5,15 +5,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Task6 {
-    public static final int UPPER_LIMIT = 10000;
-    public static final int BOTTOM_LIMIT = 1000;
-    public static final int WRONG_NUMBER_OF_DIGITS = 1;
-    public static final int KAPREKAR_CONST = 6174;
-    public static final int FIRST_DIGIT = 10;
-    public static final int SECOND_DIGIT = 10;
-    public static final int THIRD_DIGIT = 100;
-    public static final int FOURTH_DIGIT = 1000;
-    public static final int LAST_INDEX = 3;
+    private static final int UPPER_LIMIT = 10000;
+    private static final int BOTTOM_LIMIT = 1000;
+    private static final int WRONG_NUMBER_OF_DIGITS = 1;
+    private static final int KAPREKAR_CONST = 6174;
+    private static final int FIRST_DIGIT = 10;
+    private static final int SECOND_DIGIT = 10;
+    private static final int THIRD_DIGIT = 100;
+    private static final int FOURTH_DIGIT = 1000;
+    private static final int LAST_INDEX = 3;
 
     private Task6() {
     }

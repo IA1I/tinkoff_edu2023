@@ -1,8 +1,8 @@
 package edu.hw1;
 
 public class Task7 {
-    public static final int ZERO = 0;
-    public static final int RADIX = 2;
+    private static final int ZERO = 0;
+    private static final int RADIX = 2;
 
     private Task7() {
     }

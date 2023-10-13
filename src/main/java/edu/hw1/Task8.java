@@ -1,10 +1,10 @@
 package edu.hw1;
 
 public class Task8 {
-    public static final int COLUMN_LENGTH = 8;
-    public static final int ROW_LENGTH = 8;
-    public static final byte CELL_WITH_KNIGHT = 1;
-    public static final byte[][] KNIGHTS_MOVES = new byte[][] {
+    private static final int COLUMN_LENGTH = 8;
+    private static final int ROW_LENGTH = 8;
+    private static final byte CELL_WITH_KNIGHT = 1;
+    private static final byte[][] KNIGHTS_MOVES = new byte[][] {
         {2, 1},
         {2, -1},
         {1, 2},

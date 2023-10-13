@@ -1,9 +1,9 @@
 package edu.hw1;
 
 public class Task2 {
-    public static final int ZERO = 0;
-    public static final int INITIAL_VALUE = 0;
-    public static final int BASE = 10;
+    private static final int ZERO = 0;
+    private static final int INITIAL_VALUE = 0;
+    private static final int BASE = 10;
 
     private Task2() {
     }

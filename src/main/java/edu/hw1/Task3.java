@@ -1,7 +1,7 @@
 package edu.hw1;
 
 public class Task3 {
-    public static final int ZERO_LENGTH = 0;
+    private static final int ZERO_LENGTH = 0;
 
     private Task3() {
     }

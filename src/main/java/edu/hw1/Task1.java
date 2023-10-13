@@ -1,10 +1,10 @@
 package edu.hw1;
 
 public class Task1 {
-    public static final String COLON = ":";
-    public static final int NUMBER_OF_SECTIONS = 2;
-    public static final int WRONG_ANSWER = -1;
-    public static final int SIXTY_SECONDS = 60;
+    private static final String COLON = ":";
+    private static final int NUMBER_OF_SECTIONS = 2;
+    private static final int WRONG_ANSWER = -1;
+    private static final int SIXTY_SECONDS = 60;
 
     private Task1() {
     }
