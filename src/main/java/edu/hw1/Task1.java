@@ -15,14 +15,14 @@ public class Task1 {
         try {
             duration = inputProcessing(videoLength);
             durationInSeconds = duration[0] * SIXTY_SECONDS + duration[1];
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             durationInSeconds = WRONG_ANSWER;
         }
 
         return durationInSeconds;
     }
 
-    private static int[] inputProcessing(String videoLength) throws Exception {
+    private static int[] inputProcessing(String videoLength) {
         String[] input = videoLength.split(COLON);
         int[] duration = new int[NUMBER_OF_SECTIONS];
         if (input.length != NUMBER_OF_SECTIONS) {
