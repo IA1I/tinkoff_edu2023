@@ -26,13 +26,13 @@ public class Task1 {
         String[] input = videoLength.split(COLON);
         int[] duration = new int[NUMBER_OF_SECTIONS];
         if (input.length != NUMBER_OF_SECTIONS) {
-            throw new Exception();
+            throw new IllegalArgumentException();
         }
         for (int i = 0; i < NUMBER_OF_SECTIONS; i++) {
             duration[i] = Integer.parseInt(input[i]);
         }
         if (duration[1] >= SIXTY_SECONDS) {
-            throw new Exception();
+            throw new IllegalArgumentException();
         }
 
         return duration;
