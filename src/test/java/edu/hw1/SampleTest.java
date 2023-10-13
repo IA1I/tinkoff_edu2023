@@ -8,10 +8,22 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SampleTest {
+
+    @Nested
+    @DisplayName("0. Привет, мир!")
+    class TestTask0{
+        @Test
+        void applicationWritesHelloWordToSystemOut() throws Exception {
+            String actual = tapSystemOut(Task0::sayHelloToWorld);
+            String expected = "Привет, мир!";
+            assertThat(actual).contains(expected);
+        }
+    }
 
     @Nested
     @DisplayName("1. Длина видео")
