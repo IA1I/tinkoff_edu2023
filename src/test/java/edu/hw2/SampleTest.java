@@ -1,8 +1,16 @@
 package edu.hw2;
 
+import com.github.stefanbirkner.systemlambda.Statement;
 import edu.hw2.Task1.Expr;
 import edu.hw2.Task2.Rectangle;
 import edu.hw2.Task2.Square;
+import edu.hw2.Task3.PopularCommandExecutor;
+import edu.hw2.Task3.connectionmanagers.ConnectionManager;
+import edu.hw2.Task3.connectionmanagers.DefaultConnectionManager;
+import edu.hw2.Task3.connectionmanagers.FaultyConnectionManager;
+import edu.hw2.Task3.connections.StableConnection;
+import edu.hw2.Task3.exceptions.ConnectionException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,7 +19,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOutNormalized;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 
 public class SampleTest {
 
@@ -66,7 +78,7 @@ public class SampleTest {
     @DisplayName("2. Квадрат и прямоугольник")
     class TestTask2 {
         static Arguments[] rectangles() {
-            return new Arguments[]{
+            return new Arguments[] {
                 Arguments.of(new Rectangle(0, 0)),
                 Arguments.of(new Square(0, 0))
             };
@@ -79,6 +91,30 @@ public class SampleTest {
             rect = rect.setHeight(10);
 
             assertThat(rect.area()).isEqualTo(200.0);
+        }
+    }
+
+    @Nested
+    @DisplayName("3. Удаленный сервер")
+    class TestTask3 {
+        @Test
+        @DisplayName("Превышение количества попыток")
+        void testExceededAttempts() {
+            PopularCommandExecutor executor = new PopularCommandExecutor(new FaultyConnectionManager(), 1);
+
+            assertThrows(ConnectionException.class, () -> {
+                while(true){
+                    executor.updatePackages();
+                }
+            });
+        }
+
+        @Test
+        @DisplayName("Успешное выполнение команды")
+        void testSuccessfulCommandExecution() throws Exception {
+            PopularCommandExecutor executor = new PopularCommandExecutor(new DefaultConnectionManager(), 100);
+
+            assertDoesNotThrow(executor::updatePackages);
         }
     }
 }
