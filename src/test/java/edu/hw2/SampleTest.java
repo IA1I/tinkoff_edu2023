@@ -1,6 +1,8 @@
 package edu.hw2;
 
 import edu.hw2.Task1.Expr;
+import edu.hw2.Task2.Rectangle;
+import edu.hw2.Task2.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -60,5 +62,23 @@ public class SampleTest {
 
     }
 
+    @Nested
+    @DisplayName("2. Квадрат и прямоугольник")
+    class TestTask2 {
+        static Arguments[] rectangles() {
+            return new Arguments[]{
+                Arguments.of(new Rectangle(0, 0)),
+                Arguments.of(new Square(0, 0))
+            };
+        }
 
+        @ParameterizedTest
+        @MethodSource("rectangles")
+        void rectangleArea(Rectangle rect) {
+            rect = rect.setWidth(20);
+            rect = rect.setHeight(10);
+
+            assertThat(rect.area()).isEqualTo(200.0);
+        }
+    }
 }
