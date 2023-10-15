@@ -5,10 +5,10 @@ import edu.hw2.Task3.connections.Connection;
 import edu.hw2.Task3.connections.FaultyConnection;
 import edu.hw2.Task3.connections.StableConnection;
 
-public class DefaultConnectionManager implements ConnectionManager{
+public class DefaultConnectionManager implements ConnectionManager {
     @Override
     public Connection getConnection() {
-        if(Chance.getChance()){
+        if (Chance.getChance()) {
             return new StableConnection();
         } else {
             return new FaultyConnection();

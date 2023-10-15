@@ -20,20 +20,20 @@ public class PopularCommandExecutor {
         tryExecute("apt update && apt upgrade -y");
     }
 
-    void tryExecute(String command){
+    void tryExecute(String command) {
         Connection connection = manager.getConnection();
         for (int attempt = 1; attempt <= maxAttempts; attempt++) {
-            try{
+            try {
                 connection.execute(command);
                 break;
-            } catch (ConnectionException ce) {
+            } catch (ConnectionException connectionException) {
                 if (attempt == maxAttempts) {
                     try {
                         connection.close();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                    throw new ConnectionException("Number of attempts exceeded", ce.getCause());
+                    throw new ConnectionException("Number of attempts exceeded", connectionException.getCause());
                 }
             } catch (Exception ignored) {
 
