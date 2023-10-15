@@ -1,16 +1,13 @@
 package edu.hw2;
 
-import com.github.stefanbirkner.systemlambda.Statement;
 import edu.hw2.Task1.Expr;
 import edu.hw2.Task2.Rectangle;
 import edu.hw2.Task2.Square;
 import edu.hw2.Task3.PopularCommandExecutor;
-import edu.hw2.Task3.connectionmanagers.ConnectionManager;
 import edu.hw2.Task3.connectionmanagers.DefaultConnectionManager;
 import edu.hw2.Task3.connectionmanagers.FaultyConnectionManager;
-import edu.hw2.Task3.connections.StableConnection;
 import edu.hw2.Task3.exceptions.ConnectionException;
-import org.junit.jupiter.api.Disabled;
+import edu.hw2.Task4.CallingInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -18,12 +15,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import java.util.stream.Stream;
-import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOutNormalized;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 
 public class SampleTest {
 
@@ -103,7 +97,7 @@ public class SampleTest {
             PopularCommandExecutor executor = new PopularCommandExecutor(new FaultyConnectionManager(), 1);
 
             assertThrows(ConnectionException.class, () -> {
-                while(true){
+                while (true) {
                     executor.updatePackages();
                 }
             });
@@ -115,6 +109,51 @@ public class SampleTest {
             PopularCommandExecutor executor = new PopularCommandExecutor(new DefaultConnectionManager(), 100);
 
             assertDoesNotThrow(executor::updatePackages);
+        }
+    }
+
+    @Nested
+    @DisplayName("4. Кто вызвал функцию?")
+    class TestTask4 {
+        @Test
+        @DisplayName("Кто вызвал метод callingInfo")
+        void testStackTrace() {
+            String expectedClassName = "edu.hw2.SampleTest$TestTask4";
+            String expectedMethodName = "testStackTrace";
+            CallingInfo callingInfo = CallingInfo.callingInfo();
+            String actualClassName = callingInfo.className();
+            String actualMethodName = callingInfo.methodName();
+
+            assertThat(actualClassName).isEqualTo(expectedClassName);
+            assertThat(actualMethodName).isEqualTo(expectedMethodName);
+        }
+
+        @Test
+        @DisplayName("Тест для проверки вызова конкретного метода")
+        void testStackTraceWithSpecificMethod() {
+            String expectedClassName = "edu.hw2.SampleTest$TestTask4";
+            String expectedMethodName = "testStackTraceWithSpecificMethod";
+
+            CallingInfo callingInfo = CallingInfo.callingInfo("testStackTraceWithSpecificMethod");
+            String actualClassName = callingInfo.className();
+            String actualMethodName = callingInfo.methodName();
+
+            assertThat(actualClassName).isEqualTo(expectedClassName);
+            assertThat(actualMethodName).isEqualTo(expectedMethodName);
+        }
+
+        @Test
+        @DisplayName("Тест для проверки вызова конкретного метода, который не использовали")
+        void testStackTraceWithSpecificMethodThatWasNotCalled() {
+            String expectedClassName = "Никто не вызывал";
+            String expectedMethodName = "getChance";
+
+            CallingInfo callingInfo = CallingInfo.callingInfo("getChance");
+            String actualClassName = callingInfo.className();
+            String actualMethodName = callingInfo.methodName();
+
+            assertThat(actualClassName).isEqualTo(expectedClassName);
+            assertThat(actualMethodName).isEqualTo(expectedMethodName);
         }
     }
 }
