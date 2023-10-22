@@ -8,6 +8,7 @@ import edu.hw2.Task3.connectionmanagers.DefaultConnectionManager;
 import edu.hw2.Task3.connectionmanagers.FaultyConnectionManager;
 import edu.hw2.Task3.exceptions.ConnectionException;
 import edu.hw2.Task4.CallingInfo;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,9 +16,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
+import java.util.Random;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 public class SampleTest {
 
@@ -74,7 +78,7 @@ public class SampleTest {
         static Arguments[] rectangles() {
             return new Arguments[] {
                 Arguments.of(new Rectangle(0, 0)),
-                Arguments.of(new Square(0, 0))
+                Arguments.of(new Square(0))
             };
         }
 
@@ -84,7 +88,7 @@ public class SampleTest {
             rect = rect.setWidth(20);
             rect = rect.setHeight(10);
 
-            assertThat(rect.area()).isEqualTo(200.0);
+            assertThat(rect.area()).isEqualTo(200);
         }
     }
 
@@ -92,23 +96,30 @@ public class SampleTest {
     @DisplayName("3. Удаленный сервер")
     class TestTask3 {
         @Test
-        @DisplayName("Превышение количества попыток")
-        void testExceededAttempts() {
-            PopularCommandExecutor executor = new PopularCommandExecutor(new FaultyConnectionManager(), 1);
-
-            assertThrows(ConnectionException.class, () -> {
-                while (true) {
-                    executor.updatePackages();
-                }
-            });
+        @DisplayName("Успешное выполнение команды")
+        void testSuccessfulCommandExecutionForStableConnection() {
+            Random random = mock(Random.class);
+            PopularCommandExecutor executor = new PopularCommandExecutor(new DefaultConnectionManager(random), 1);
+            Mockito.when(random.nextInt(0, 10)).thenReturn(2);
+            assertDoesNotThrow(() -> executor.updatePackages(random));
         }
 
         @Test
         @DisplayName("Успешное выполнение команды")
-        void testSuccessfulCommandExecution() throws Exception {
-            PopularCommandExecutor executor = new PopularCommandExecutor(new DefaultConnectionManager(), 100);
+        void testSuccessfulCommandExecutionForFaultyConnection() {
+            Random random = mock(Random.class);
+            PopularCommandExecutor executor = new PopularCommandExecutor(new FaultyConnectionManager(), 1);
+            Mockito.when(random.nextInt(0, 10)).thenReturn(2);
+            assertDoesNotThrow(() -> executor.updatePackages(random));
+        }
 
-            assertDoesNotThrow(executor::updatePackages);
+        @Test
+        @DisplayName("Превышение количества попыток")
+        void testExceedingNumberOfAttemptsForFaultyConnection() {
+            PopularCommandExecutor executor = new PopularCommandExecutor(new FaultyConnectionManager(), 5);
+            Random random = mock(Random.class);
+            Mockito.when(random.nextInt(0, 10)).thenReturn(0);
+            Assertions.assertThrows(ConnectionException.class, () -> executor.updatePackages(random));
         }
     }
 

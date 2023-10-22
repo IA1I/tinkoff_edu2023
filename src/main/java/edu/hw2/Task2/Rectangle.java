@@ -17,7 +17,7 @@ public class Rectangle {
         return new Rectangle(this.width, height);
     }
 
-    public double area() {
+    public int area() {
         return width * height;
     }
 }
