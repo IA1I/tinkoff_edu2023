@@ -1,10 +1,10 @@
 package edu.project1.gamesession;
 
 import edu.project1.guessresults.GuessResult;
-import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
 
 public class Session {
     private final String answer;

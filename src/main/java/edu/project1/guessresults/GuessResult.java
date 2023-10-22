@@ -1,9 +1,13 @@
 package edu.project1.guessresults;
 
 import org.jetbrains.annotations.NotNull;
-import java.util.Arrays;
 
 public sealed interface GuessResult {
+
+    String MISSED_MISTAKE = "\nMissed, mistake ";
+    String OUT_OF = " out of ";
+    String HIT = "\nHit!\n";
+    String THE_WORD = "The word: ";
 
     @NotNull String message();
 
@@ -12,7 +16,7 @@ public sealed interface GuessResult {
         @Override
         public @NotNull String message() {
             if (attempt == maxAttempts) {
-                return "\nMissed, mistake " + attempt + " out of " + maxAttempts + "\nYou lost!";
+                return MISSED_MISTAKE + attempt + OUT_OF + maxAttempts + "\nYou lost!";
             } else {
                 return "\nYou gave up!\nYou lost!";
             }
@@ -23,9 +27,7 @@ public sealed interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "\nHit!\n" +
-                "The word: " + getUserAnswer() +
-                "\nYou win!";
+            return HIT + THE_WORD + getUserAnswer() + "\nYou win!";
         }
 
         private String getUserAnswer() {
@@ -42,8 +44,7 @@ public sealed interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "\nHit!\n" +
-                "The word: " + getUserAnswer();
+            return HIT + THE_WORD + getUserAnswer();
         }
 
         private String getUserAnswer() {
@@ -60,7 +61,7 @@ public sealed interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "\nMissed, mistake " + attempt + " out of " + maxAttempts;
+            return MISSED_MISTAKE + attempt + OUT_OF + maxAttempts;
         }
     }
 

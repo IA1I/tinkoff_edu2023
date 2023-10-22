@@ -1,9 +1,9 @@
 package edu.project1.dictionaries;
 
-import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.jetbrains.annotations.NotNull;
 
 public class SimpleDictionary implements Dictionary {
     private final List<String> dictionary = new ArrayList<>();

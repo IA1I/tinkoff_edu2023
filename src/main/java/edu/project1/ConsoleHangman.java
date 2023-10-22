@@ -3,20 +3,21 @@ package edu.project1;
 import edu.project1.dictionaries.Dictionary;
 import edu.project1.gamesession.Session;
 import edu.project1.guessresults.GuessResult;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConsoleHangman {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String WORD_PATTERN = "[a-z]{2,}";
     private static final String GUESS_A_LETTER = "\n> Guess a letter:";
+    public static final int DEFAULT_MAX_ATTEMPTS = 5;
     private final int maxAttempts;
     private final Dictionary dictionary;
 
     public ConsoleHangman(Dictionary dictionary) {
-        this(5, dictionary);
+        this(DEFAULT_MAX_ATTEMPTS, dictionary);
     }
 
     public ConsoleHangman(int maxAttempts, Dictionary dictionary) {
@@ -59,7 +60,6 @@ public class ConsoleHangman {
 
     private void checkHiddenWord(String word) {
         if (word == null || !word.matches(WORD_PATTERN)) {
-            System.out.println(word);
             throw new IllegalArgumentException();
         }
     }
