@@ -41,6 +41,59 @@ public class SampleTest {
     }
 
     @Nested
+    @DisplayName("2. Кластеризация скобок")
+    class TestTask2{
+
+        @Test
+        void shouldThrowIllegalArgumentExceptionForNullInput(){
+            assertThrows(IllegalArgumentException.class, () -> Task2.clusterize(null));
+        }
+
+        @ParameterizedTest
+        @MethodSource("testCasesForBalancedInput")
+        void shouldReturnClusterForBalancedInput(final String input, final List<String> expected){
+            List<String> actual = Task2.clusterize(input);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> testCasesForBalancedInput(){
+            return Stream.of(
+                Arguments.of("()()()", List.of("()", "()", "()")),
+                Arguments.of("((()))", List.of("((()))")),
+                Arguments.of("((()))(())()()(()())", List.of("((()))", "(())", "()", "()", "(()())")),
+                Arguments.of("((())())(()(()()))", List.of("((())())", "(()(()()))"))
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("testCasesForUnbalancedInput")
+        void shouldThrowIllegalArgumentExceptionForUnbalancedInput(final String input){
+            assertThrows(IllegalArgumentException.class, () -> Task2.clusterize(input));
+        }
+
+        static Stream<Arguments> testCasesForUnbalancedInput(){
+            return Stream.of(
+                Arguments.of("(()"),
+                Arguments.of("()))")
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("testCasesForBadInput")
+        void shouldThrowIllegalArgumentExceptionForBadInput(final String input){
+            assertThrows(IllegalArgumentException.class, () -> Task2.clusterize(input));
+        }
+
+        static Stream<Arguments> testCasesForBadInput(){
+            return Stream.of(
+                Arguments.of("((213)5.sfsa"),
+                Arguments.of("()))kmf.2/40-(*")
+            );
+        }
+    }
+
+    @Nested
     @DisplayName("3. Частота слов")
     class TestTask3 {
         @Test
@@ -82,6 +135,37 @@ public class SampleTest {
             return Stream.of(
                 Arguments.of(List.of(1, 1, 2, 2), Map.of(1, 2, 2, 2))
             );
+        }
+    }
+
+    @Nested
+    @DisplayName("4. Римские цифры")
+    class TestTask4{
+
+        @ParameterizedTest
+        @CsvSource({
+            "0",
+            "4000",
+            "-1",
+            "5000"
+        })
+        void shouldThrowIllegalArgumentExceptionForBadInput(final int input){
+            assertThrows(IllegalArgumentException.class, () -> Task4.convertToRoman(input));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+            "2, II",
+            "12, XII",
+            "16, XVI",
+            "3999, MMMCMXCIX",
+            "1988, MCMLXXXVIII",
+            "283, CCLXXXIII"
+        })
+        void shouldConvertDecimalNumberToRoman(final int input, final String expected){
+            String actual = Task4.convertToRoman(input);
+
+            assertThat(actual).isEqualTo(expected);
         }
     }
 }
