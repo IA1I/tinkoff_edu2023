@@ -1,5 +1,7 @@
 package edu.hw3;
 
+import edu.hw3.task5.Contact;
+import edu.hw3.task5.Task5;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -10,6 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -42,22 +45,22 @@ public class SampleTest {
 
     @Nested
     @DisplayName("2. Кластеризация скобок")
-    class TestTask2{
+    class TestTask2 {
 
         @Test
-        void shouldThrowIllegalArgumentExceptionForNullInput(){
+        void shouldThrowIllegalArgumentExceptionForNullInput() {
             assertThrows(IllegalArgumentException.class, () -> Task2.clusterize(null));
         }
 
         @ParameterizedTest
         @MethodSource("testCasesForBalancedInput")
-        void shouldReturnClusterForBalancedInput(final String input, final List<String> expected){
+        void shouldReturnClusterForBalancedInput(final String input, final List<String> expected) {
             List<String> actual = Task2.clusterize(input);
 
             assertThat(actual).isEqualTo(expected);
         }
 
-        static Stream<Arguments> testCasesForBalancedInput(){
+        static Stream<Arguments> testCasesForBalancedInput() {
             return Stream.of(
                 Arguments.of("()()()", List.of("()", "()", "()")),
                 Arguments.of("((()))", List.of("((()))")),
@@ -68,11 +71,11 @@ public class SampleTest {
 
         @ParameterizedTest
         @MethodSource("testCasesForUnbalancedInput")
-        void shouldThrowIllegalArgumentExceptionForUnbalancedInput(final String input){
+        void shouldThrowIllegalArgumentExceptionForUnbalancedInput(final String input) {
             assertThrows(IllegalArgumentException.class, () -> Task2.clusterize(input));
         }
 
-        static Stream<Arguments> testCasesForUnbalancedInput(){
+        static Stream<Arguments> testCasesForUnbalancedInput() {
             return Stream.of(
                 Arguments.of("(()"),
                 Arguments.of("()))")
@@ -81,11 +84,11 @@ public class SampleTest {
 
         @ParameterizedTest
         @MethodSource("testCasesForBadInput")
-        void shouldThrowIllegalArgumentExceptionForBadInput(final String input){
+        void shouldThrowIllegalArgumentExceptionForBadInput(final String input) {
             assertThrows(IllegalArgumentException.class, () -> Task2.clusterize(input));
         }
 
-        static Stream<Arguments> testCasesForBadInput(){
+        static Stream<Arguments> testCasesForBadInput() {
             return Stream.of(
                 Arguments.of("((213)5.sfsa"),
                 Arguments.of("()))kmf.2/40-(*")
@@ -140,7 +143,7 @@ public class SampleTest {
 
     @Nested
     @DisplayName("4. Римские цифры")
-    class TestTask4{
+    class TestTask4 {
 
         @ParameterizedTest
         @CsvSource({
@@ -149,7 +152,7 @@ public class SampleTest {
             "-1",
             "5000"
         })
-        void shouldThrowIllegalArgumentExceptionForBadInput(final int input){
+        void shouldThrowIllegalArgumentExceptionForBadInput(final int input) {
             assertThrows(IllegalArgumentException.class, () -> Task4.convertToRoman(input));
         }
 
@@ -162,10 +165,93 @@ public class SampleTest {
             "1988, MCMLXXXVIII",
             "283, CCLXXXIII"
         })
-        void shouldConvertDecimalNumberToRoman(final int input, final String expected){
+        void shouldConvertDecimalNumberToRoman(final int input, final String expected) {
             String actual = Task4.convertToRoman(input);
 
             assertThat(actual).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("5. Список контактов")
+    class TestTask5 {
+        @ParameterizedTest
+        @MethodSource("correctTestCases")
+        void shouldReturnArrayOfContactsForCorrectInput(
+            final String[] inputNames,
+            final String inputSortType,
+            final Contact[] expected
+        ) {
+            Contact[] actual = Task5.parseContacts(inputNames, inputSortType);
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> correctTestCases() {
+            return Stream.of(
+                Arguments.of(
+                    new String[] {"John Locke", "Thomas Aquinas", "David Hume", "Rene Descartes"},
+                    "ASC",
+                    new Contact[] {new Contact("Thomas", "Aquinas"), new Contact("Rene", "Descartes"),
+                        new Contact("David", "Hume"), new Contact("John", "Locke")}
+                ),
+                Arguments.of(
+                    new String[] {"Paul Erdos", "Leonhard Euler", "Carl Gauss"},
+                    "DESC",
+                    new Contact[] {new Contact("Carl", "Gauss"), new Contact("Leonhard", "Euler"),
+                        new Contact("Paul", "Erdos")}
+                ),
+                Arguments.of(new String[] {}, "DESC", new Contact[] {}),
+                Arguments.of(null, "DESC", new Contact[] {})
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("correctTestCasesWithoutFullName")
+        void shouldReturnArrayOfContactsForInputWithoutFullName(
+            final String[] inputNames,
+            final String inputSortType,
+            final Contact[] expected
+        ) {
+            Contact[] actual = Task5.parseContacts(inputNames, inputSortType);
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        static Stream<Arguments> correctTestCasesWithoutFullName() {
+            return Stream.of(
+                Arguments.of(
+                    new String[] {"Ivan", "Egor", "Lina"},
+                    "ASC",
+                    new Contact[] {new Contact("Egor", ""), new Contact("Ivan", ""), new Contact("Lina", "")}
+                ),
+                Arguments.of(
+                    new String[] {"Ivan", "Egor", "Lina"},
+                    "DESC",
+                    new Contact[] {new Contact("Lina", ""), new Contact("Ivan", ""), new Contact("Egor", "")}
+                ),
+                Arguments.of(
+                    new String[] {"Ivan Portnov", "Egor", "Lina"},
+                    "ASC",
+                    new Contact[] {new Contact("Egor", ""), new Contact("Lina", ""), new Contact("Ivan", "Portnov")}
+                ),
+                Arguments.of(
+                    new String[] {"Ivan Portnov", "Egor Portnov", "Lina", "", "Ilya Komarov"},
+                    "ASC",
+                    new Contact[] {new Contact("", ""), new Contact("Lina", ""), new Contact("Ilya", "Komarov"),
+                        new Contact("Egor", "Portnov"), new Contact("Ivan", "Portnov")}
+                )
+            );
+        }
+
+        @Test
+        void shouldThrowIllegalArgumentExceptionForNullSortTypeInput() {
+            assertThrows(IllegalArgumentException.class, () -> Task5.parseContacts(new String[] {}, null));
+        }
+
+        @Test
+        void shouldThrowIllegalArgumentExceptionForIncorrectSortTypeInput() {
+            assertThrows(IllegalArgumentException.class, () -> Task5.parseContacts(new String[] {}, "wrong type"));
+        }
+    }
+
+    
 }
