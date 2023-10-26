@@ -1,11 +1,9 @@
 package edu.hw3;
 
-import org.jetbrains.annotations.NotNull;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
+@SuppressWarnings("MagicNumber")
 public class Task4 {
 
     private static final int LOWER_BOUNDARY = 0;
@@ -41,10 +39,11 @@ public class Task4 {
     }
 
     private static StringBuilder getStringBuilder(int number) {
+        int currentNumber = number;
         StringBuilder romanNumber = new StringBuilder();
         for (var constant : CONSTANTS.descendingKeySet()) {
-            while (number >= constant) {
-                number -= constant;
+            while (currentNumber >= constant) {
+                currentNumber -= constant;
                 romanNumber.append(CONSTANTS.get(constant));
             }
         }
