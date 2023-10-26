@@ -2,7 +2,11 @@ package edu.hw3;
 
 import edu.hw3.task5.Contact;
 import edu.hw3.task5.Task5;
+import edu.hw3.task6.SimpleStockMarket;
+import edu.hw3.task6.Stock;
+import edu.hw3.task6.StockMarket;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -253,5 +258,60 @@ public class SampleTest {
         }
     }
 
+    @Nested
+    @DisplayName("6. Биржа")
+    class TestTask6 {
+        static StockMarket market;
+        static Stock stock1;
+        static Stock stock2;
+        static Stock stock3;
 
+        @BeforeAll
+        static void setup() {
+            market = new SimpleStockMarket(new PriorityQueue<>());
+            stock1 = new Stock(10.0);
+            stock2 = new Stock(5.0);
+            stock3 = new Stock(777.0);
+            market.add(stock1);
+            market.add(stock2);
+            market.add(stock3);
+        }
+
+        @Test
+        void shouldAddStockToMarket() {
+            List<Stock> expected = new ArrayList<>();
+            expected.add(stock1);
+            expected.add(stock2);
+            expected.add(stock3);
+
+            List<Stock> actual = market.getAllStocks();
+
+            assertThat(actual).hasSameElementsAs(expected);
+        }
+
+        @Test
+        void shouldRemoveStockFromMarket() {
+            List<Stock> expected = new ArrayList<>();
+            expected.add(stock1);
+            expected.add(stock3);
+
+            market.remove(stock2);
+
+            List<Stock> actual = market.getAllStocks();
+
+            assertThat(actual).hasSameElementsAs(expected);
+            market.add(stock3);
+        }
+
+        @Test
+        void shouldReturnTheMostExpensiveStock(){
+            Stock actual = market.mostValuableStock();
+            assertThat(actual).isEqualTo(stock3);
+        }
+
+        @Test
+        void shouldThrowIllegalArgumentExceptionForNegativeStock(){
+            assertThrows(IllegalArgumentException.class, () -> new Stock(-3.4));
+        }
+    }
 }
