@@ -1,5 +1,6 @@
 package edu.hw3;
 
+import edu.hw3.Task7.NullableComparator;
 import edu.hw3.task5.Contact;
 import edu.hw3.task5.Task5;
 import edu.hw3.task6.SimpleStockMarket;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -304,14 +306,27 @@ public class SampleTest {
         }
 
         @Test
-        void shouldReturnTheMostExpensiveStock(){
+        void shouldReturnTheMostExpensiveStock() {
             Stock actual = market.mostValuableStock();
             assertThat(actual).isEqualTo(stock3);
         }
 
         @Test
-        void shouldThrowIllegalArgumentExceptionForNegativeStock(){
+        void shouldThrowIllegalArgumentExceptionForNegativeStock() {
             assertThrows(IllegalArgumentException.class, () -> new Stock(-3.4));
         }
     }
+
+    @Nested
+    @DisplayName("7. Дерево и null")
+    class TestTask7 {
+        @Test
+        void shouldWorkWithNullKey() {
+            TreeMap<String, String> tree = new TreeMap<>(new NullableComparator());
+
+            tree.put(null, "test");
+            assertThat(tree.containsKey(null)).isTrue();
+        }
+    }
+
 }
