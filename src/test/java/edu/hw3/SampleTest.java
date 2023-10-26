@@ -1,12 +1,12 @@
 package edu.hw3;
 
-import edu.hw3.Task7.NullableComparator;
+import edu.hw3.task7.NullableComparator;
 import edu.hw3.task5.Contact;
 import edu.hw3.task5.Task5;
 import edu.hw3.task6.SimpleStockMarket;
 import edu.hw3.task6.Stock;
 import edu.hw3.task6.StockMarket;
-import org.junit.jupiter.api.Assertions;
+import edu.hw3.task8.BackwardIterator;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -329,4 +329,43 @@ public class SampleTest {
         }
     }
 
+    @Nested
+    @DisplayName("8. Обратный итератор")
+    class TestTask8 {
+        @Test
+        void shouldReturnIntegerElementsInReverseOrder() {
+            List<Integer> list = new ArrayList<>();
+            int elementsNumber = 5;
+            for (int i = 0; i < elementsNumber; i++) {
+                list.add(i);
+            }
+            Iterator<Integer> integerIterator = new BackwardIterator<>(list);
+
+            for (int i = 0; i < elementsNumber; i++) {
+                assertThat(integerIterator.next()).isEqualTo(list.get(elementsNumber - i - 1));
+            }
+        }
+
+        @Test
+        void shouldReturnStringElementsInReverseOrder() {
+            List<String> list = new ArrayList<>();
+            int elementsNumber = 5;
+            for (int i = 0; i < elementsNumber; i++) {
+                list.add(String.valueOf(i));
+            }
+            Iterator<String> integerIterator = new BackwardIterator<>(list);
+
+            for (int i = 0; i < elementsNumber; i++) {
+                assertThat(integerIterator.next()).isEqualTo(list.get(elementsNumber - i - 1));
+            }
+        }
+
+        @Test
+        void shouldReturnFalseForEmptyList() {
+            List<String> list = new ArrayList<>();
+            Iterator<String> integerIterator = new BackwardIterator<>(list);
+
+            assertFalse(integerIterator.hasNext());
+        }
+    }
 }
