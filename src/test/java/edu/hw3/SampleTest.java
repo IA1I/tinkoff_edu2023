@@ -302,7 +302,7 @@ public class SampleTest {
             List<Stock> actual = market.getAllStocks();
 
             assertThat(actual).hasSameElementsAs(expected);
-            market.add(stock3);
+            market.add(stock2);
         }
 
         @Test
