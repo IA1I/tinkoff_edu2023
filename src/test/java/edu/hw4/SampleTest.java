@@ -488,7 +488,7 @@ public class SampleTest {
 
         @Test
         void shouldReturnEmptyListForNullList() {
-            List<Animal> actual = AnimalUtils.getBitingAnimalsWithHeightMoreThan100(null);
+            List<Animal> actual = AnimalUtils.getAnimalsWhoseNamesConsistOfMoreThanTwoWords(null);
 
             assertThat(actual.isEmpty()).isTrue();
         }
