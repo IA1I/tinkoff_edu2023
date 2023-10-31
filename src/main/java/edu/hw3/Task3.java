@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Task3 {
-
-    private static final int DEFAULT_VALUE = 0;
-    private static final int INCREMENT = 1;
+    private static final int INITIAL_VALUE = 1;
 
     private Task3() {
     }
@@ -18,7 +16,7 @@ public class Task3 {
         }
         Map<T, Integer> freqDict = new HashMap<>();
         for (var object : listObjects) {
-            freqDict.put(object, freqDict.getOrDefault(object, DEFAULT_VALUE) + INCREMENT);
+            freqDict.merge(object, INITIAL_VALUE, Integer::sum);
         }
 
         return freqDict;

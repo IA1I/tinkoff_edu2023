@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.TreeMap;
 import java.util.stream.Stream;
@@ -366,6 +367,17 @@ public class SampleTest {
             Iterator<String> integerIterator = new BackwardIterator<>(list);
 
             assertFalse(integerIterator.hasNext());
+        }
+
+        @Test
+        void shouldReturnNoSuchElementException() {
+            Iterator<Integer> integerIterator = new BackwardIterator<>(List.of(1, 2, 3, 4));
+
+            for(int i = 0; i < 4; i++){
+                integerIterator.next();
+            }
+            assertFalse(integerIterator.hasNext());
+            assertThrows(NoSuchElementException.class, integerIterator::next);
         }
     }
 }
