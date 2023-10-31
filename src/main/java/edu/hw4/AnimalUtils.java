@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -157,16 +158,19 @@ public class AnimalUtils {
             .anyMatch(animal -> animal.height() > k);
     }
 
-    public static Integer getWeightAnimalsWhoseHeightBetweenKAndI(List<Animal> animals, int k, int l) {
+    public static Map<Animal.Type, Integer> getWeightAnimalsWhoseHeightBetweenKAndI(
+        List<Animal> animals,
+        int k,
+        int l
+    ) {
         if (animals == null) {
-            return 0;
+            return new HashMap<>();
         }
 
         return animals.stream()
             .filter(animal -> animal.height() > k)
             .filter(animal -> animal.height() < l)
-            .mapToInt(Animal::weight)
-            .sum();
+            .collect(Collectors.groupingBy(Animal::type, Collectors.summingInt(Animal::weight)));
     }
 
     public static List<Animal> getAnimalsSortedByTypeThenBySexThenByName(List<Animal> animals) {

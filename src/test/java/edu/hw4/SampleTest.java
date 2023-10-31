@@ -546,31 +546,37 @@ public class SampleTest {
     class TestTask15 {
         @Test
         void shouldReturnWeightAnimalsWhoseHeightBetween5And30() {
-            Integer expected = 29377;
-            Integer actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(animals, 5, 30);
+            Map<Animal.Type, Integer> expected = new HashMap<>();
+            expected.put(Animal.Type.DOG, 18500);
+            expected.put(Animal.Type.FISH, 200);
+            expected.put(Animal.Type.BIRD, 92);
+            expected.put(Animal.Type.SPIDER, 85);
+            expected.put(Animal.Type.CAT, 10500);
+            Map<Animal.Type, Integer> actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(animals, 5, 30);
 
-            assertThat(actual).isEqualTo(expected);
+            assertThat(actual).containsExactlyInAnyOrderEntriesOf(expected);
         }
 
         @Test
-        void shouldReturnZeroForHeightBetween15And10() {
-            Integer actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(animals, 15, 10);
+        void shouldReturnEmptyMapForHeightBetween15And10() {
+            Map<Animal.Type, Integer> actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(animals, 15, 10);
 
-            assertThat(actual).isEqualTo(0);
+            assertThat(actual).isEmpty();
         }
 
         @Test
-        void shouldReturnZeroForEmptyList() {
-            Integer actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(new ArrayList<>(), 5, 30);
+        void shouldReturnEmptyMapForEmptyList() {
+            Map<Animal.Type, Integer> actual =
+                AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(new ArrayList<>(), 5, 30);
 
-            assertThat(actual).isEqualTo(0);
+            assertThat(actual).isEmpty();
         }
 
         @Test
-        void shouldReturnZeroForNullList() {
-            Integer actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(null, 5, 30);
+        void shouldReturnEmptyMapForNullList() {
+            Map<Animal.Type, Integer> actual = AnimalUtils.getWeightAnimalsWhoseHeightBetweenKAndI(null, 5, 30);
 
-            assertThat(actual).isEqualTo(0);
+            assertThat(actual).isEmpty();
         }
     }
 
@@ -717,7 +723,7 @@ public class SampleTest {
                 new Animal("", Animal.Type.CAT, null, 1, 1, 1, true),
                 new Animal("1", Animal.Type.DOG, Animal.Sex.M, 0, -12, -45, true)
             );
-            String[] expectedNames = new String[]{null, "", "1"};
+            String[] expectedNames = new String[] {null, "", "1"};
             List<Set<ValidationError>> expectedErrors = new ArrayList<>();
             Set<ValidationError> set = new HashSet<>();
             set.add(ValidationError.NAME_IS_NULL);
@@ -739,7 +745,7 @@ public class SampleTest {
             Map<String, Set<ValidationError>> actual = AnimalUtils.getAnimalsWithErrorsInRecord(incorrectAnimals);
 
             assertThat(actual).containsOnlyKeys(null, "", "1");
-            for(int i = 0; i < expectedNames.length; i++){
+            for (int i = 0; i < expectedNames.length; i++) {
                 assertThat(actual.get(expectedNames[i])).containsExactlyInAnyOrderElementsOf(expectedErrors.get(i));
             }
 
@@ -780,8 +786,8 @@ public class SampleTest {
                 new Animal("", Animal.Type.CAT, null, 1, 1, 1, true),
                 new Animal("1", Animal.Type.DOG, Animal.Sex.M, 0, -12, -45, true)
             );
-            String[] expectedNames = new String[]{null, "", "1"};
-            String[][] expectedErrors = new String[][]{
+            String[] expectedNames = new String[] {null, "", "1"};
+            String[][] expectedErrors = new String[][] {
                 {"NAME_IS_NULL", "TYPE_IS_NULL"},
                 {"EMPTY_NAME", "EMPTY_NAME"},
                 {"WRONG_NAME", "WRONG_AGE", "WRONG_HEIGHT", "WRONG_WEIGHT"}
@@ -789,8 +795,8 @@ public class SampleTest {
 
             Map<String, String> actual = AnimalUtils.getReadableAnimalsWithErrorsRecord(incorrectAnimals);
             assertThat(actual).containsOnlyKeys(null, "", "1");
-            for(int i = 0; i < expectedNames.length; i++){
-                for(int j = 0; j < expectedErrors[i].length; j++){
+            for (int i = 0; i < expectedNames.length; i++) {
+                for (int j = 0; j < expectedErrors[i].length; j++) {
                     assertThat(actual.get(expectedNames[i])).contains(expectedErrors[i][j]);
                 }
             }
