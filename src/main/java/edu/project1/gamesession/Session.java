@@ -58,10 +58,10 @@ public class Session {
     }
 
     private void setSuccessfulGuessLetters(char guess) {
-        int index = answer.indexOf(guess);
-        while (index != NO_LETTER_IN_WORD) {
-            userAnswer[index] = guess;
-            index = answer.indexOf(guess, index + 1);
+        for (int letterIndex = 0; letterIndex < answer.length(); letterIndex++) {
+            if (answer.charAt(letterIndex) == guess) {
+                userAnswer[letterIndex] = guess;
+            }
         }
     }
 

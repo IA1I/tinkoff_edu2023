@@ -6,6 +6,7 @@ import java.util.Random;
 import org.jetbrains.annotations.NotNull;
 
 public class SimpleDictionary implements Dictionary {
+    private static final String WORD_PATTERN = "[a-z]{2,}";
     private final List<String> dictionary = new ArrayList<>();
 
     {
@@ -23,7 +24,14 @@ public class SimpleDictionary implements Dictionary {
     @Override
     public @NotNull String randomWord() {
         Random random = new Random();
+        String word = dictionary.get(random.nextInt(dictionary.size()));
+        checkHiddenWord(word);
+        return word;
+    }
 
-        return dictionary.get(random.nextInt(dictionary.size()));
+    private void checkHiddenWord(String word) {
+        if (word == null || !word.matches(WORD_PATTERN)) {
+            throw new IllegalArgumentException();
+        }
     }
 }
