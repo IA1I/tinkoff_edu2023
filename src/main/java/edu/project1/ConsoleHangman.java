@@ -33,16 +33,13 @@ public class ConsoleHangman {
         try (Scanner scanner = new Scanner(System.in)) {
             while (!isGameOver(guessResult)) {
                 LOGGER.info(GUESS_A_LETTER);
-                try {
-                    String input = scanner.nextLine();
-                    guessResult = tryGuess(session, input);
-                } catch (NoSuchElementException noSuchElementException) {
-                    guessResult = session.giveUp();
-                }
+                String input = scanner.nextLine();
+                guessResult = tryGuess(session, input);
                 printState(guessResult);
             }
-        } catch (Exception e) {
-            LOGGER.info("Something wrong. Try again.");
+        } catch (NoSuchElementException noSuchElementException) {
+            guessResult = session.giveUp();
+            printState(guessResult);
         }
     }
 
