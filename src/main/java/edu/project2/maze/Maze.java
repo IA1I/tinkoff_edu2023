@@ -41,6 +41,10 @@ public final class Maze {
         return grid;
     }
 
+    public void setGridRow(byte[] row, int rowIndex) {
+        grid[rowIndex] = row;
+    }
+
     public void breakWall(int row, int column, byte wall) {
         grid[row][column] -= wall;
     }
