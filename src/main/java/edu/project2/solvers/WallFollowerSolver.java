@@ -4,8 +4,7 @@ import edu.project2.maze.Coordinate;
 import edu.project2.maze.Maze;
 import java.util.ArrayList;
 import java.util.List;
-
-import static edu.project2.maze.Maze.*;
+import static edu.project2.maze.Maze.NO_WALLS;
 
 public class WallFollowerSolver implements Solver {
     public static final int TOTAL_DIRECTIONS = 4;
@@ -28,14 +27,10 @@ public class WallFollowerSolver implements Solver {
         path.add(current);
         while (!current.equals(end)) {
             List<Coordinate> possibleCoordinates = getPossibleCoordinates(current);
-            if(possibleCoordinates.size() == 1){
+            if (possibleCoordinates.size() == 1) {
                 current = possibleCoordinates.get(0);
 
                 path.add(possibleCoordinates.get(0));
-            } else {
-                if(isClockwise){
-
-                }
             }
         }
         return null;
@@ -59,7 +54,10 @@ public class WallFollowerSolver implements Solver {
         return possibleCoordinates;
     }
 
-    private Coordinate getFirstStep(Coordinate current){
-        if()
+    private Coordinate getFirstStep(Coordinate current) {
+//        if()
+
+        return null;
     }
+
 }
