@@ -9,6 +9,9 @@ public class DaysAgoDateParser extends DateParser {
     public static final String SEPARATOR = " ";
     public static final int INDEX_OF_NUMBER = 0;
 
+    public DaysAgoDateParser() {
+    }
+
     public DaysAgoDateParser(DateParser nextDateParser) {
         super(nextDateParser);
     }

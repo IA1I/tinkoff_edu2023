@@ -10,6 +10,7 @@ import edu.hw5.task3.date_parser.TodayDateParser;
 import edu.hw5.task3.date_parser.TomorrowDateParser;
 import edu.hw5.task3.date_parser.YesterdayDateParser;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class Task3 {
@@ -20,9 +21,18 @@ public class Task3 {
         if (isNullInput(string)) {
             return Optional.empty();
         }
-        DateParser parser =
-            new FirstDateParser(new SecondDateParser(new ThirdDateParser(new FourthDateParser(new TomorrowDateParser(
-                new TodayDateParser(new YesterdayDateParser(new DaysAgoDateParser(null))))))));
+        List<DateParser> parsers = List.of(
+            new FirstDateParser(),
+            new SecondDateParser(),
+            new ThirdDateParser(),
+            new FourthDateParser(),
+            new TomorrowDateParser(),
+            new TodayDateParser(),
+            new YesterdayDateParser(),
+            new DaysAgoDateParser()
+        );
+        DateParser parser = DateParser.getParser(parsers);
+
         return parser.parseDate(string);
     }
 

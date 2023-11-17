@@ -8,6 +8,9 @@ import java.util.Optional;
 public class SecondDateParser extends DateParser {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-d");
 
+    public SecondDateParser() {
+    }
+
     public SecondDateParser(DateParser nextDateParser) {
         super(nextDateParser);
     }

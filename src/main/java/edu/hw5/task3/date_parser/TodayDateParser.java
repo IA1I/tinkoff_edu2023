@@ -6,6 +6,9 @@ import java.util.Optional;
 public class TodayDateParser extends DateParser {
     private static final String FORMATTER = "today";
 
+    public TodayDateParser() {
+    }
+
     public TodayDateParser(DateParser nextDateParser) {
         super(nextDateParser);
     }

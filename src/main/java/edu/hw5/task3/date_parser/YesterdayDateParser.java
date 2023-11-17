@@ -7,6 +7,9 @@ public class YesterdayDateParser extends DateParser {
     private static final String FORMATTER_YESTERDAY = "yesterday";
     private static final String FORMATTER_DAY_AGO = "1 day ago";
 
+    public YesterdayDateParser() {
+    }
+
     public YesterdayDateParser(DateParser nextDateParser) {
         super(nextDateParser);
     }

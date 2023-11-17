@@ -8,6 +8,9 @@ import java.util.Optional;
 public class ThirdDateParser extends DateParser {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("d/M/yyyy");
 
+    public ThirdDateParser() {
+    }
+
     public ThirdDateParser(DateParser nextDateParser) {
         super(nextDateParser);
     }

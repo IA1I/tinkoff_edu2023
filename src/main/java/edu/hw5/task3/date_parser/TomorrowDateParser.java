@@ -7,6 +7,9 @@ public class TomorrowDateParser extends DateParser {
 
     private static final String FORMATTER = "tomorrow";
 
+    public TomorrowDateParser() {
+    }
+
     public TomorrowDateParser(DateParser nextDateParser) {
         super(nextDateParser);
     }
