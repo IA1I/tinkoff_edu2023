@@ -9,6 +9,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("UncommentedMain")
 public class ConsoleHangman {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String HINT = "\n> Hint: To give up press CTRL D";
