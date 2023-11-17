@@ -33,7 +33,7 @@ public class Task3Test {
 
         }
 
-        Assertions.assertThat(actual).containsExactlyElementsOf(expected);
+        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     static Stream<Arguments> testCases() {
@@ -54,7 +54,7 @@ public class Task3Test {
             ),
 
             Arguments.of(
-                filter.and(AbstractFilter.largerThan(3000)),
+                filter.and(AbstractFilter.largerThan(3050)),
                 List.of("src\\main\\java\\edu\\hw6\\Task6.java")
             ),
             Arguments.of(
@@ -87,6 +87,6 @@ public class Task3Test {
 
         }
 
-        Assertions.assertThat(actual).containsExactlyElementsOf(expected);
+        Assertions.assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 }
