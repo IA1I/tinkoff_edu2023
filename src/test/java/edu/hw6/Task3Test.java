@@ -27,7 +27,7 @@ public class Task3Test {
     @MethodSource("testCases")
     void shouldFilterFiles(final AbstractFilter filter, final List<String> expected) {
         List<String> actual = new ArrayList<>();
-        try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of("src\\main\\java\\edu\\hw6"), filter)) {
+        try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of("src/main/java/edu/hw6"), filter)) {
             entries.forEach(path -> actual.add(path.toString()));
         } catch (IOException e) {
 
@@ -42,34 +42,34 @@ public class Task3Test {
             Arguments.of(
                 filter,
                 List.of(
-                    "src\\main\\java\\edu\\hw6\\task1",
-                    "src\\main\\java\\edu\\hw6\\task2",
-                    "src\\main\\java\\edu\\hw6\\task3",
-                    "src\\main\\java\\edu\\hw6\\task4"
+                    "src/main/java/edu/hw6/task1",
+                    "src/main/java/edu/hw6/task2",
+                    "src/main/java/edu/hw6/task3",
+                    "src/main/java/edu/hw6/task4"
                 )
             ),
             Arguments.of(
                 filter = Files::isRegularFile,
-                List.of("src\\main\\java\\edu\\hw6\\Task5.java", "src\\main\\java\\edu\\hw6\\Task6.java")
+                List.of("src/main/java/edu/hw6/Task5.java", "src/main/java/edu/hw6/Task6.java")
             ),
 
             Arguments.of(
                 filter.and(AbstractFilter.largerThan(3050)),
-                List.of("src\\main\\java\\edu\\hw6\\Task6.java")
+                List.of("src/main/java/edu/hw6/Task6.java")
             ),
             Arguments.of(
                 AbstractFilter.globMatches("*.java"),
-                List.of("src\\main\\java\\edu\\hw6\\Task5.java", "src\\main\\java\\edu\\hw6\\Task6.java")
+                List.of("src/main/java/edu/hw6/Task5.java", "src/main/java/edu/hw6/Task6.java")
             ),
             Arguments.of(
                 AbstractFilter.regexContains("ask"),
                 List.of(
-                    "src\\main\\java\\edu\\hw6\\task1",
-                    "src\\main\\java\\edu\\hw6\\task2",
-                    "src\\main\\java\\edu\\hw6\\task3",
-                    "src\\main\\java\\edu\\hw6\\task4",
-                    "src\\main\\java\\edu\\hw6\\Task5.java",
-                    "src\\main\\java\\edu\\hw6\\Task6.java"
+                    "src/main/java/edu/hw6/task1",
+                    "src/main/java/edu/hw6/task2",
+                    "src/main/java/edu/hw6/task3",
+                    "src/main/java/edu/hw6/task4",
+                    "src/main/java/edu/hw6/Task5.java",
+                    "src/main/java/edu/hw6/Task6.java"
                 )
             )
         );
