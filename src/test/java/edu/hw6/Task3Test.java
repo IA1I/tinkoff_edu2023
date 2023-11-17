@@ -77,11 +77,12 @@ public class Task3Test {
 
     @Test
     void shouldFilterXMLFiles() {
+        System.out.println(Path.of("src").toString());
         AbstractFilter filter =
             AbstractFilter.magicNumber((byte) 0x3c, (byte) 0x3f, (byte) 0x78, (byte) 0x6d, (byte) 0x6c, (byte) 0x20);
         List<String> actual = new ArrayList<>();
-        List<String> expected = List.of("checkstyle.xml", "pom.xml");
-        try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of(""), filter)) {
+        List<String> expected = List.of("src/main/resources/log4j2.xml");
+        try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of("src/main/resources"), filter)) {
             entries.forEach(path -> actual.add(path.toString()));
         } catch (IOException e) {
 
