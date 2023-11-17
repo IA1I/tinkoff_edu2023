@@ -27,7 +27,7 @@ public class Task3Test {
     @MethodSource("testCases")
     void shouldFilterFiles(final AbstractFilter filter, final List<String> expected) {
         List<String> actual = new ArrayList<>();
-        try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of("src/main/java/edu/hw6"), filter)) {
+        try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of("src\\main\\java\\edu\\hw6"), filter)) {
             entries.forEach(path -> actual.add(path.toString()));
         } catch (IOException e) {
 
