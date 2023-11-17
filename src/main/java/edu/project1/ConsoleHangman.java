@@ -1,6 +1,7 @@
 package edu.project1;
 
 import edu.project1.dictionaries.Dictionary;
+import edu.project1.dictionaries.SimpleDictionary;
 import edu.project1.gamesession.Session;
 import edu.project1.guessresults.GuessResult;
 import java.util.NoSuchElementException;
@@ -23,6 +24,11 @@ public class ConsoleHangman {
     public ConsoleHangman(int maxAttempts, Dictionary dictionary) {
         this.maxAttempts = maxAttempts;
         this.dictionary = dictionary;
+    }
+
+    public static void main(String[] args) {
+        ConsoleHangman game = new ConsoleHangman(new SimpleDictionary());
+        game.run();
     }
 
     public void run() {
