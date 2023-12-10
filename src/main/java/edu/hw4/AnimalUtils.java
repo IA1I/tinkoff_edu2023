@@ -60,11 +60,13 @@ public class AnimalUtils {
         if (animals == null || animals.isEmpty()) {
             return null;
         }
+
         return animals.stream()
             .collect(Collectors.groupingBy(Animal::sex, Collectors.counting()))
             .entrySet().stream()
             .max(Comparator.comparingLong(Map.Entry::getValue))
-            .get().getKey();
+            .map(Map.Entry::getKey)
+            .orElse(null);
     }
 
     public static Map<Animal.Type, Optional<Animal>> getHeaviestAnimalsOfEachType(List<Animal> animals) {
@@ -187,14 +189,17 @@ public class AnimalUtils {
             return false;
         }
 
-        return animals.stream()
+        long bitingDogs = animals.stream()
             .filter(Animal::bites)
-            .filter(animal -> animal.type() == Animal.Type.DOG || animal.type() == Animal.Type.SPIDER)
-            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()))
-            .entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .stream()
-            .allMatch(typeLongEntry -> typeLongEntry.getKey() == Animal.Type.SPIDER);
+            .filter(animal -> animal.type() == Animal.Type.DOG)
+            .count();
+
+        long bitingSpiders = animals.stream()
+            .filter(Animal::bites)
+            .filter(animal -> animal.type() == Animal.Type.SPIDER)
+            .count();
+
+        return bitingSpiders > bitingDogs;
     }
 
     public static Optional<Animal> getHeaviestFishFromLists(List<Animal>... animals) {
@@ -214,7 +219,7 @@ public class AnimalUtils {
         }
 
         return animals.stream()
-            .collect(Collectors.toMap(Animal::name, Animal::getValidationErrors))
+            .collect(Collectors.toMap(Animal::name, ErrorUtils::getValidationErrors))
             .entrySet().stream()
             .filter(stringSetEntry -> !stringSetEntry.getValue().isEmpty())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
@@ -226,7 +231,7 @@ public class AnimalUtils {
         }
 
         return animals.stream()
-            .collect(Collectors.toMap(Animal::name, Animal::getValidationErrors))
+            .collect(Collectors.toMap(Animal::name, ErrorUtils::getValidationErrors))
             .entrySet().stream()
             .filter(e -> !e.getValue().isEmpty())
             .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toString()));
