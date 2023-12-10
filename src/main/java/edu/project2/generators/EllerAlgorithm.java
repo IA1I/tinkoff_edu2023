@@ -20,10 +20,6 @@ public class EllerAlgorithm implements Generator {
         this.random = random;
     }
 
-    public EllerAlgorithm() {
-        this.random = new Random();
-    }
-
     @Override
     public Maze generate(int height, int width) {
         checkInput(height, width);

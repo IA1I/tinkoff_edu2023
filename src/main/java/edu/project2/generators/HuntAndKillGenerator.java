@@ -27,10 +27,6 @@ public class HuntAndKillGenerator implements Generator {
         this.random = random;
     }
 
-    public HuntAndKillGenerator() {
-        this.random = new Random();
-    }
-
     @Override
     public Maze generate(int height, int width) {
         checkInput(height, width);
@@ -165,13 +161,7 @@ public class HuntAndKillGenerator implements Generator {
     private boolean isCoordinateCorrect(Coordinate coordinate) {
         int row = coordinate.getRow();
         int column = coordinate.getColumn();
-        if (0 > row || row >= height) {
-            return false;
-        }
-        if (0 > column || column >= width) {
-            return false;
-        }
 
-        return true;
+        return row >= 0 && row < height && column >= 0 && column < width;
     }
 }

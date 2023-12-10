@@ -50,19 +50,20 @@ public class RecursiveBacktrackerSolver implements Solver {
         this.end = end;
     }
 
-    private boolean recursiveBackTracker(Coordinate current) {
+    @SuppressWarnings("ReturnCount")
+    private void recursiveBackTracker(Coordinate current) {
         if (isOver()) {
-            return true;
+            return;
         }
         int row = current.getRow();
         int column = current.getColumn();
         if (!isCoordinateCorrect(current)) {
-            return false;
+            return;
         }
         path.add(current);
         visitedGrid[row][column] = true;
         if (isEndOfPath(current)) {
-            return true;
+            return;
         }
         if ((grid[row][column] & UPPER_WALL) == NO_WALLS && !visitedGrid[row - 1][column]) {
             recursiveBackTracker(new Coordinate(row - 1, column));
@@ -79,8 +80,6 @@ public class RecursiveBacktrackerSolver implements Solver {
         if (!isOver()) {
             path.removeLast();
         }
-
-        return false;
     }
 
     private boolean isCoordinateCorrect(Coordinate coordinate) {
@@ -97,14 +96,7 @@ public class RecursiveBacktrackerSolver implements Solver {
     }
 
     private boolean isEndOfPath(Coordinate coordinate) {
-        if (coordinate.getRow() != end.getRow()) {
-            return false;
-        }
-        if (coordinate.getColumn() != end.getColumn()) {
-            return false;
-        }
-
-        return true;
+        return coordinate.getRow() == end.getRow() && coordinate.getColumn() == end.getColumn();
     }
 
     private boolean isOver() {
