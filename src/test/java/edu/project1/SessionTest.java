@@ -21,7 +21,7 @@ public class SessionTest {
     void testWrongLetterGuessFormat(final String input) {
         Session session = new Session("word", 5);
         GuessResult guessResult = session.guess(input);
-        String expectedMessage = "\nWrong format!";
+        String expectedMessage = "\nWrong format!\nEnter an english lowercase letter.";
 
         assertThat(guessResult.getClass()).isEqualTo(GuessResult.WrongInputFormatGuess.class);
         assertThat(guessResult.message()).isEqualTo(expectedMessage);
@@ -79,7 +79,7 @@ public class SessionTest {
         session.guess("c");
         session.guess("e");
         GuessResult guessResult = session.guess("f");
-        String expectedMessage = "\nMissed, mistake 5 out of 5\nYou lost!";
+        String expectedMessage = "\nMissed, mistake 5 out of 5\nYou lost!\nThe hidden word was: word";
 
         assertThat(guessResult.getClass()).isEqualTo(GuessResult.Defeat.class);
         assertThat(guessResult.message()).isEqualTo(expectedMessage);
@@ -105,7 +105,7 @@ public class SessionTest {
     void testSurrender() {
         Session session = new Session("word", 5);
         GuessResult guessResult = session.giveUp();
-        String expectedMessage = "\nYou gave up!\nYou lost!";
+        String expectedMessage = "\nYou gave up!\nYou lost!\nThe hidden word was: word";
 
         assertThat(guessResult.getClass()).isEqualTo(GuessResult.Defeat.class);
         assertThat(guessResult.message()).isEqualTo(expectedMessage);

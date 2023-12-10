@@ -11,14 +11,14 @@ public sealed interface GuessResult {
 
     @NotNull String message();
 
-    record Defeat(char[] state, int attempt, int maxAttempts) implements GuessResult {
+    record Defeat(String answer, char[] state, int attempt, int maxAttempts) implements GuessResult {
 
         @Override
         public @NotNull String message() {
             if (attempt == maxAttempts) {
-                return MISSED_MISTAKE + attempt + OUT_OF + maxAttempts + "\nYou lost!";
+                return MISSED_MISTAKE + attempt + OUT_OF + maxAttempts + "\nYou lost!\nThe hidden word was: " + answer;
             } else {
-                return "\nYou gave up!\nYou lost!";
+                return "\nYou gave up!\nYou lost!\nThe hidden word was: " + answer;
             }
         }
     }
@@ -77,7 +77,7 @@ public sealed interface GuessResult {
 
         @Override
         public @NotNull String message() {
-            return "\nWrong format!";
+            return "\nWrong format!\nEnter an english lowercase letter.";
         }
     }
 }

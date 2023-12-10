@@ -45,7 +45,7 @@ public class Session {
     }
 
     public @NotNull GuessResult giveUp() {
-        return new GuessResult.Defeat(userAnswer, attempts, maxAttempts);
+        return new GuessResult.Defeat(answer, userAnswer, attempts, maxAttempts);
     }
 
     private GuessResult successfulGuess(char guess) {
@@ -78,7 +78,7 @@ public class Session {
     private GuessResult failedGuess() {
         attempts++;
         if (attempts == maxAttempts) {
-            return new GuessResult.Defeat(userAnswer, attempts, maxAttempts);
+            return new GuessResult.Defeat(answer, userAnswer, attempts, maxAttempts);
         } else {
             return new GuessResult.FailedGuess(userAnswer, attempts, maxAttempts);
         }
