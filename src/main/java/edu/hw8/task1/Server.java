@@ -51,20 +51,7 @@ public class Server {
             LOGGER.info("Waiting for a client connection");
             Socket client = server.accept();
             numberOfResponses--;
-            executorService.submit(() -> {
-                try (
-                    BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                    PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                ) {
-                    LOGGER.info("New client connected: {}", client.getInetAddress());
-                    String word = in.readLine();
-                    out.write(CAROUS_ANSWERS.get(word));
-                    LOGGER.info("Get the request: {}", word);
-                } catch (IOException e) {
-                    LOGGER.error("Something went wrong: {}", e.getMessage());
-                    throw new RuntimeException(e);
-                }
-            });
+            executorService.submit(() -> sendAnswer(client));
         }
         try {
             executorService.awaitTermination(TIMEOUT, TimeUnit.SECONDS);
@@ -73,5 +60,20 @@ public class Server {
         }
         executorService.close();
         server.close();
+    }
+
+    private void sendAnswer(Socket client) {
+        try (
+            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+        ) {
+            LOGGER.info("New client connected: {}", client.getInetAddress());
+            String word = in.readLine();
+            out.write(CAROUS_ANSWERS.get(word));
+            LOGGER.info("Get the request: {}", word);
+        } catch (IOException e) {
+            LOGGER.error("Something went wrong: {}", e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

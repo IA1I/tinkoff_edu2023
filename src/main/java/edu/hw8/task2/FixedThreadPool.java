@@ -2,16 +2,13 @@ package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class FixedThreadPool implements ThreadPool {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final long TIMEOUT = 10L;
     private final Thread[] threads;
     private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
-    private Boolean isClosed = false;
 
     private FixedThreadPool(int threadsNumber) {
         if (threadsNumber < 1) {
@@ -20,16 +17,16 @@ public class FixedThreadPool implements ThreadPool {
         }
         this.threads = new Thread[threadsNumber];
         for (int i = 0; i < threadsNumber; i++) {
+            int finalI = i;
             threads[i] = new Thread(() -> {
-                while (!isClosed) {
+                while (!threads[finalI].isInterrupted()) {
                     try {
-                        Runnable task = tasks.poll(TIMEOUT, TimeUnit.SECONDS);
-                        if (task != null) {
-                            LOGGER.info("Running task {}", task);
-                            task.run();
-                        }
+                        Runnable task = tasks.take();
+                        LOGGER.info("Running task {}", task);
+                        task.run();
                     } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                        LOGGER.error("Thread interrupted");
+                        break;
                     }
                 }
             });
@@ -59,8 +56,8 @@ public class FixedThreadPool implements ThreadPool {
     public void close() throws Exception {
         while (!tasks.isEmpty()) {
         }
-        synchronized (isClosed) {
-            isClosed = true;
+        for (Thread thread : threads) {
+            thread.interrupt();
         }
         LOGGER.info("Closing");
         for (Thread thread : threads) {
