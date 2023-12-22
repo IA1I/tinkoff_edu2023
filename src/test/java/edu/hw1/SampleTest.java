@@ -17,7 +17,7 @@ public class SampleTest {
 
     @Nested
     @DisplayName("0. Привет, мир!")
-    class TestTask0{
+    class TestTask0 {
         @Test
         @Disabled
         void applicationWritesHelloWordToSystemOut() throws Exception {
